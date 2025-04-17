@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Settings - RamChemicals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #1e3a29;
+      color: white;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-logo {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .sidebar-logo img {
+      width: 150px;
+      height: 150px;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+      flex-grow: 1;
+    }
+
+    .menu-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-item.active {
+      background-color: #2e5a3e;
+      border-left: 4px solid #7dcea0;
+    }
+
+    .menu-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #2e5a3e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      color: white;
+    }
+
+    .content-area {
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .settings-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .settings-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #2e5a3e;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .settings-group {
+      margin-bottom: 20px;
+    }
+
+    .settings-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    .settings-group input,
+    .settings-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .settings-group input[type="checkbox"] {
+      width: auto;
+    }
+
+    .save-btn {
+      background-color: #2e5a3e;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    .save-btn:hover {
+      background-color: #265033;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <img src="Selected photo.jfif" alt="Logo">
+    </div>
+    <div class="sidebar-menu">
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-tachometer-alt"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="viewOrder.html" class="menu-item">
+        <i class="fas fa-shopping-cart"></i>
+        <span>View Orders</span>
+      </a>
+      <a href="processOrder.html" class="menu-item">
+        <i class="fas fa-tasks"></i>
+        <span>Place Orders</span>
+      </a>
+      <a href="addProduct.html" class="menu-item">
+        <i class="fas fa-plus-circle"></i>
+        <span>Add Products</span>
+      </a>
+      <a href="viewProduct.html" class="menu-item">
+        <i class="fas fa-boxes"></i>
+        <span>View Products</span>
+      </a>
+      <a href="reports.html" class="menu-item">
+        <i class="fas fa-chart-line"></i>
+        <span>View Reports</span>
+      </a>
+      <a href="settings.html" class="menu-item active">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </a>
+      <a href="#" class="menu-item" onclick="logout(event)">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div>Admin@gmail.com</div>
+      </div>
+      <div>
+        <i class="fas fa-bell" style="margin-right: 15px; cursor: pointer;"></i>
+        <i class="fas fa-sign-out-alt" style="cursor: pointer;"></i>
+      </div>
+    </div>
+
+    <div class="content-area">
+      <div class="settings-container">
+        <div class="settings-title">Settings</div>
+
+        <div class="settings-group">
+          <label for="email">Update Email</label>
+          <input type="email" id="email" placeholder="Enter new email" />
+        </div>
+
+        <div class="settings-group">
+          <label for="password">Change Password</label>
+          <input type="password" id="password" placeholder="Enter new password" />
+        </div>
+
+        <div class="settings-group">
+          <label for="notifications">Notifications</label>
+          <select id="notifications">
+            <option value="enabled">Enable</option>
+            <option value="disabled">Disable</option>
+          </select>
+        </div>
+
+        <div class="settings-group">
+          <label>
+            <input type="checkbox" id="darkMode" />
+            Enable Dark Mode
+          </label>
+        </div>
+
+        <button class="save-btn" onclick="saveSettings()">Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function logout(event) {
+      event.preventDefault();
+      const confirmation = confirm("Are you sure you want to log out?");
+      if (confirmation) {
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+    }
+
+    function saveSettings() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const notifications = document.getElementById("notifications").value;
+      const darkMode = document.getElementById("darkMode").checked;
+
+      alert("Settings saved successfully!");
+
+      // Optional: Save settings to localStorage or send to server
+      console.log({
+        email,
+        password,
+        notifications,
+        darkMode
+      });
+    }
+  </script>
+</body>
+</html>

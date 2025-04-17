@@ -2,117 +2,287 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Sales Reports - POS</title>
+  <title>View Reports - RamChemicals</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
   <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background: #f4f4f4;
+      display: flex;
+      height: 100vh;
+      background-color: #f5f5f5;
     }
 
-    .container {
-      max-width: 800px;
-      margin: auto;
-      background: white;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    .sidebar {
+      width: 250px;
+      background-color: #1e3a29;
+      color: white;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
     }
 
-    h1 {
+    .sidebar-logo {
+      padding: 20px;
       text-align: center;
-      margin-bottom: 30px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .summary {
-      font-size: 18px;
-      margin-bottom: 20px;
+    .logo-text {
+      font-size: 24px;
+      font-weight: bold;
+      color: #7dcea0;
+    }
+
+    .sidebar-menu {
+      padding: 20px 0;
+      flex-grow: 1;
+    }
+
+    .menu-item {
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .menu-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-item.active {
+      background-color: #2e5a3e;
+      border-left: 4px solid #7dcea0;
+    }
+
+    .menu-item i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .main-content {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-avatar {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background-color: #2e5a3e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      color: white;
+    }
+
+    .content-area {
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .dashboard-title {
+      font-size: 28px;
+      font-weight: bold;
+      color: #2e5a3e;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .order-container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease-in-out;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
-    th, td {
-      padding: 12px;
+    th {
+      background-color: #1e3a29;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 14px 16px;
       text-align: left;
-      border-bottom: 1px solid #ccc;
+      border-bottom: 2px solid #e0e0e0;
     }
 
-    .no-data {
-      text-align: center;
-      margin-top: 50px;
-      font-size: 18px;
-      color: gray;
+    td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #444;
+    }
+
+    tbody tr {
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    tbody tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 20px;
+      font-weight: bold;
+      color: #1e3a29;
+      margin-top: 20px;
+      padding-right: 5px;
     }
   </style>
 </head>
 <body>
-<!-- Sidebar -->
-<div class="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-text">
-      <img src="Selected photo.jfif" alt="Logo" style="width: 150px; height: 150px;  ">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">
+        <img src="Selected photo.jfif" alt="Logo" style="width: 150px; height: 150px;">
+      </div>
+    </div>
+    <div class="sidebar-menu">
+      <a href="index.html" class="menu-item">
+        <i class="fas fa-tachometer-alt" style="padding: 10px;"></i>
+        <span>RamChemicals</span>
+      </a>
+      <a href="viewOrder.html" class="menu-item">
+        <i class="fas fa-shopping-cart" style="padding: 10px;"></i>
+        <span>View Orders</span>
+      </a>
+      <a href="processOrder.html" class="menu-item">
+        <i class="fas fa-tasks" style="padding: 10px;"></i>
+        <span>Place Orders</span>
+      </a>
+      <a href="addProduct.html" class="menu-item">
+        <i class="fas fa-plus-circle" style="padding: 10px;"></i>
+        <span>Add Products</span>
+      </a>
+      <a href="viewProduct.html" class="menu-item">
+        <i class="fas fa-boxes" style="padding: 10px;"></i>
+        <span>View Products</span>
+      </a>
+      <a href="reports.html" class="menu-item active">
+        <i class="fas fa-chart-line" style="padding: 10px;"></i>
+        <span>View Reports</span>
+      </a>
+      <a href="#" class="menu-item">
+        <i class="fas fa-cog" style="padding: 10px;"></i>
+        <span>Settings</span>
+      </a>
+      <a href="#" class="menu-item" onclick="logout(event)">
+        <i class="fas fa-sign-out-alt" style="padding: 10px;"></i>
+        <span>Logout</span>
+       </a>
+      </a>
     </div>
   </div>
-  <div class="sidebar-menu">
-    <a href="index.html" class="menu-item">
-      <i class="fas fa-tachometer-alt" style="padding: 10px;"></i>
-      <span>RamChemicals</span>
-    </a>
-    <a href="viewOrder.html" class="menu-item active">
-      <i class="fas fa-shopping-cart" style="padding: 10px;"></i>
-      <span>View Orders</span>
-    </a>
-    <a href="processOrder.html" class="menu-item">
-      <i class="fas fa-tasks" style="padding: 10px;"></i>
-      <span>Place Orders</span>
-    </a>
-    <a href="addProduct.html" class="menu-item">
-      <i class="fas fa-plus-circle" style="padding: 10px;"></i>
-      <span>Add Products</span>
-    </a>
-    <a href="viewProduct.html" class="menu-item">
-      <i class="fas fa-boxes" style="padding: 10px;"></i>
-      <span>View Products</span>
-    </a>
-    <a href="reports.html" class="menu-item active">
-      <i class="fas fa-boxes" style="padding: 10px;"></i>
-      <span>View reports</span>
-    </a>
-    <a href="#" class="menu-item">
-      <i class="fas fa-cog"style="padding: 10px;"></i>
-      <span>Settings</span>
-    </a>
-    <a href="#" class="menu-item" onclick="logout(event)">
-      <i class="fas fa-sign-out-alt" style="padding: 10px;"></i>
-      <span>Logout</span>
-     </a>
-  </div>
-</div>
-  
-  <div class="container">
-    <h1>📊 Sales Report</h1>
 
-    <div class="summary" id="summary"></div>
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="top-bar">
+      <div class="user-info">
+        <div class="user-avatar">
+          <i class="fas fa-user"></i>
+        </div>
+        <div>Admin@gmail.com</div>
+      </div>
+      <div>
+        <i class="fas fa-bell" style="margin-right: 15px; cursor: pointer;"></i>
+        <i class="fas fa-sign-out-alt" style="cursor: pointer;"></i>
+      </div>
+    </div>
 
-    <h3>🛒 Best-Selling Products</h3>
-    <table id="topProductsTable">
-      <thead>
-        <tr>
-          <th>Product</th>
-          <th>Quantity Sold</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="content-area">
+      <h2 class="dashboard-title">Reports Summary</h2>
 
-    <div class="no-data" id="noDataMsg" style="display:none;">No sales data available.</div>
+      <div class="order-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Report</th>
+              <th>Entries</th>
+              <th>Date Generated</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Monthly Sales</td>
+              <td>24</td>
+              <td>2025-04-01</td>
+              <td>Completed</td>
+            </tr>
+            <tr>
+              <td>Product Performance</td>
+              <td>15</td>
+              <td>2025-03-29</td>
+              <td>Completed</td>
+            </tr>
+            <tr>
+              <td>Inventory Report</td>
+              <td>35</td>
+              <td>2025-03-25</td>
+              <td>Pending</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="total">
+          Total Reports: 3
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
+    function logout(event) {
+      event.preventDefault();
+      const confirmation = confirm("Are you sure you want to log out?");
+      if (confirmation) {
+        localStorage.removeItem("userRole");
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "login.html";
+      }
+    }
+
+
+  
     // Role check
     const role = localStorage.getItem("userRole");
     if (role !== "admin") {
