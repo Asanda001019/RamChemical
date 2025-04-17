@@ -21,49 +21,55 @@
         }
         
         .sidebar {
-            width: 250px;
-            background-color: #1e3a29;
-            color: white;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.3s ease;
-            overflow-y: auto;
-        }
-        
-        .sidebar-logo {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .sidebar-menu {
-            padding: 20px 0;
-            flex-grow: 1;
-        }
-        
-        .menu-item {
-            padding: 12px 20px;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .menu-item:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .menu-item.active {
-            background-color: #2e5a3e;
-            border-left: 4px solid #7dcea0;
-        }
-        
-        .menu-item i {
-            margin-right: 10px;
-            width: 20px;
-            text-align: center;
-        }
+  width: 250px;
+  background-color: #1e3a29;
+  color: white;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: bold;
+  color: #7dcea0;
+}
+
+.sidebar-menu {
+  padding: 20px 0;
+  flex-grow: 1;
+}
+
+.menu-item {
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.menu-item.active {
+  background-color: #2e5a3e;
+  border-left: 4px solid #7dcea0;
+}
+
+.menu-item i {
+  margin-right: 10px;
+  width: 20px;
+  text-align: center;
+}
+
         
         .logo-text {
             font-size: 24px;
@@ -422,20 +428,22 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-text">Ramchem logo</div>
+        <div class="logo-text">
+            <img src="Selected photo.jfif" alt="Logo" style="width: 150px; height: 150px;  ">
+          </div>
     </div>
     <div class="sidebar-menu">
       <a href="index.html" class="menu-item">
         <i class="fas fa-tachometer-alt" style="padding: 10px;"></i>
         <span>RamChemicals</span>
       </a>
-      <a href="£" class="menu-item">
-        <i class="fas fa-shopping-cart"></i>
+      <a href="viewOrder.html" class="menu-item">
+        <i class="fas fa-shopping-cart" style="padding: 10px;"></i>
         <span>View Orders</span>
       </a>
-      <a href="#" class="menu-item">
+      <a href="processOrder.html" class="menu-item">
         <i class="fas fa-tasks" style="padding: 10px;"></i>
-        <span>Process Orders</span>
+        <span>Place Orders</span>
       </a>
       <a href="addProduct.html" class="menu-item active">
         <i class="fas fa-plus-circle" style="padding: 10px;"></i>
@@ -524,7 +532,7 @@
                   <div class="form-group">
                       <label class="form-label">Price<span class="required-star">*</span></label>
                       <div class="input-addon">
-                          <span class="input-addon-icon">₦</span>
+                          <span class="input-addon-icon">R</span>
                           <input type="number" step="0.01" min="0" class="form-control" id="product-price" placeholder="0.00" required>
                       </div>
                       <div class="form-help-text">Enter the retail price</div>
