@@ -1,0 +1,21 @@
+<html>
+<!-- reports.html -->
+<script>
+    const role = localStorage.getItem("userRole");
+    if (role !== "admin") {
+      alert("Access denied. Admins only.");
+      window.location.href = "index.html";
+    }
+  
+    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+    let totalSales = 0;
+    orders.forEach(order => {
+      totalSales += order.total;
+    });
+  </script>
+  
+  <h2>Sales Report</h2>
+  <p>Total transactions: <script>document.write(orders.length)</script></p>
+  <p>Total sales: $<script>document.write(totalSales.toFixed(2))</script></p>
+  
+</html>
