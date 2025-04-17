@@ -53,7 +53,10 @@
       text-decoration: none;
       transition: background 0.2s;
     }
-
+    .sidebar-menu {
+  overflow-y: auto;
+  max-height: calc(100vh - 170px); /* Adjust height based on your header size */
+}
     .menu-item:hover {
       background-color: rgba(255, 255, 255, 0.1);
     }
@@ -201,7 +204,7 @@
         <i class="fas fa-chart-line" style="padding: 10px;"></i>
         <span>View Reports</span>
       </a>
-      <a href="#" class="menu-item">
+      <a href="setting.html" class="menu-item">
         <i class="fas fa-cog" style="padding: 10px;"></i>
         <span>Settings</span>
       </a>
