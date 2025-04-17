@@ -111,8 +111,23 @@
     else {
       alert("Invalid credentials. Please try again.");
     }
+
+    function logout() {
+  const confirmation = confirm("Are you sure you want to log out?");
+  if (confirmation) {
+    // Clear session data
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("loggedInUser");
+
+    // Redirect to login page
+    window.location.href = "login.html";
+  }
+}
+
   }
 </script>
+
+
 
 </body>
 </html>
