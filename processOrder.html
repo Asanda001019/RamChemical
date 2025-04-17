@@ -154,6 +154,17 @@
 
     // Add first row by default
     addRow();
+    let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+orders.push({
+  items: [
+    { name: "Coca Cola", qty: 2, price: 1.5 },
+    { name: "Chips", qty: 1, price: 1.8 }
+  ],
+  total: 4.8,
+  timestamp: new Date().toISOString()
+});
+localStorage.setItem("orders", JSON.stringify(orders));
+
   </script>
 
 </body>
