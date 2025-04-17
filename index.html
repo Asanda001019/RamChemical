@@ -1,4 +1,4 @@
-index
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -247,18 +247,6 @@ index
           window.location.href = "login.html";
         }
       
-        window.onload = function () {
-          const greeting = document.getElementById("greeting");
-          const panel = document.getElementById("adminPanel");
-      
-          if (role === "admin") {
-            greeting.textContent = "Welcome, Manager!";
-            panel.style.display = "block";
-          } else if (role === "cashier") {
-            greeting.textContent = "Welcome, Cashier!";
-            panel.style.display = "none"; // hide admin-only panels
-          }
-        };
       </script>
       
 </body>
