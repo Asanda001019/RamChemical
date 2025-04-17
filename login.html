@@ -54,6 +54,17 @@
     
   </style>
 </head>
+<script>
+    // If already logged in, redirect based on role
+    const userRole = localStorage.getItem("userRole");
+  
+    if (userRole === "admin") {
+      window.location.href = "index.html"; // or admin dashboard
+    } else if (userRole === "cashier") {
+      window.location.href = "cashier.html";
+    }
+  </script>
+  
 <body>
 
   <div class="login-container">
