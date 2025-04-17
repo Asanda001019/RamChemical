@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Process Order - POS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      padding: 40px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .order-form {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 5px;
+    }
+
+    .add-btn, .process-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .total {
+      text-align: right;
+      font-weight: bold;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+
+    .success {
+      text-align: center;
+      color: green;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Process Order</h1>
+
+  <div class="order-form">
+    <table id="orderTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Unit Price ($)</th>
+          <th>Subtotal ($)</th>
+        </tr>
+      </thead>
+      <tbody id="orderBody">
+        <!-- Order rows will go here -->
+      </tbody>
+    </table>
+
+    <button class="add-btn" onclick="addRow()">+ Add Item</button>
+
+    <div class="total" id="total">Total: $0.00</div>
+
+    <button class="process-btn" onclick="processOrder()">Process Order</button>
+
+    <div class="success" id="successMsg"></div>
+  </div>
+
+  <script>
+    function addRow() {
+      const tableBody = document.getElementById("orderBody");
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td><input type="text" placeholder="Item Name" /></td>
+        <td><input type="number" value="1" min="1" onchange="updateTotals()" /></td>
+        <td><input type="number" value="0" min="0" step="0.01" onchange="updateTotals()" /></td>
+        <td class="subtotal">$0.00</td>
+      `;
+
+      tableBody.appendChild(row);
+      updateTotals();
+    }
+
+    function updateTotals() {
+      const rows = document.querySelectorAll("#orderBody tr");
+      let total = 0;
+
+      rows.forEach(row => {
+        const qty = parseFloat(row.cells[1].querySelector("input").value) || 0;
+        const price = parseFloat(row.cells[2].querySelector("input").value) || 0;
+        const subtotal = qty * price;
+        row.cells[3].textContent = `$${subtotal.toFixed(2)}`;
+        total += subtotal;
+      });
+
+      document.getElementById("total").textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function processOrder() {
+      const rows = document.querySelectorAll("#orderBody tr");
+      if (rows.length === 0) {
+        alert("Please add at least one item.");
+        return;
+      }
+
+      let orderData = [];
+      rows.forEach(row => {
+        const item = row.cells[0].querySelector("input").value;
+        const qty = parseInt(row.cells[1].querySelector("input").value);
+        const price = parseFloat(row.cells[2].querySelector("input").value);
+        if (item && qty > 0 && price >= 0) {
+          orderData.push({ item, qty, price });
+        }
+      });
+
+      if (orderData.length === 0) {
+        alert("Please fill out all item details.");
+        return;
+      }
+
+      // Simulate saving order
+      console.log("Processing Order:", orderData);
+      document.getElementById("successMsg").textContent = "✅ Order successfully processed!";
+    }
+
+    // Add first row by default
+    addRow();
+  </script>
+
+</body>
+</html>
