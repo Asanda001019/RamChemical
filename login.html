@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>POS Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h2>POS Login</h2>
+    <div id="error" class="error"></div>
+
+    <select id="role">
+      <option value="admin">Admin / Manager</option>
+      <option value="cashier">Cashier</option>
+    </select>
+
+    <input type="text" id="username" placeholder="Username" required />
+    <input type="password" id="password" placeholder="Password" required />
+    <button onclick="login()">Login</button>
+  </div>
+
+  <script>
+    // Dummy user database
+    const users = {
+      admin: {
+        username: "manager",
+        password: "admin123", // In real apps, use hashed passwords
+        redirect: "dashboard.html"
+      },
+      cashier: {
+        username: "cashier",
+        password: "cash123",
+        redirect: "cashier.html"
+      }
+    };
+
+    function login() {
+      const role = document.getElementById("role").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorDiv = document.getElementById("error");
+
+      const user = users[role];
+
+      if (username === user.username && password === user.password) {
+        errorDiv.innerText = "";
+        // Redirect to the correct page
+        window.location.href = user.redirect;
+      } else {
+        errorDiv.innerText = "Invalid credentials. Please try again.";
+      }
+    }
+  </script>
+
+</body>
+</html>
