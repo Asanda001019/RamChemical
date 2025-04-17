@@ -231,5 +231,27 @@
             </div>
         </div>
     </div>
+    <script>
+        const role = localStorage.getItem("userRole");
+      
+        if (!role) {
+          // Not logged in, redirect to login
+          window.location.href = "login.html";
+        }
+      
+        window.onload = function () {
+          const greeting = document.getElementById("greeting");
+          const panel = document.getElementById("adminPanel");
+      
+          if (role === "admin") {
+            greeting.textContent = "Welcome, Manager!";
+            panel.style.display = "block";
+          } else if (role === "cashier") {
+            greeting.textContent = "Welcome, Cashier!";
+            panel.style.display = "none"; // hide admin-only panels
+          }
+        };
+      </script>
+      
 </body>
 </html>
