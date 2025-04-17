@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sales Reports - POS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f4f4f4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .summary {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .no-data {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 18px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>📊 Sales Report</h1>
+
+    <div class="summary" id="summary"></div>
+
+    <h3>🛒 Best-Selling Products</h3>
+    <table id="topProductsTable">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity Sold</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="no-data" id="noDataMsg" style="display:none;">No sales data available.</div>
+  </div>
+
+  <script>
+    // Role check
+    const role = localStorage.getItem("userRole");
+    if (role !== "admin") {
+      alert("Access denied. Admins only.");
+      window.location.href = "index.html";
+    }
+
+    const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+    const summaryDiv = document.getElementById("summary");
+    const tbody = document.querySelector("#topProductsTable tbody");
+    const noData = document.getElementById("noDataMsg");
+
+    if (orders.length === 0) {
+      noData.style.display = "block";
+    } else {
+      // Total sales & transactions
+      let totalSales = 0;
+      let itemSummary = {};
+
+      orders.forEach(order => {
+        totalSales += order.total;
+        order.items.forEach(item => {
+          if (!itemSummary[item.name]) {
+            itemSummary[item.name] = 0;
+          }
+          itemSummary[item.name] += item.qty;
+        });
+      });
+
+      summaryDiv.innerHTML = `
+        <p><strong>Total Sales:</strong> $${totalSales.toFixed(2)}</p>
+        <p><strong>Total Transactions:</strong> ${orders.length}</p>
+      `;
+
+      // Sort top-selling items
+      const sortedItems = Object.entries(itemSummary)
+        .sort((a, b) => b[1] - a[1]);
+
+      sortedItems.forEach(([name, qty]) => {
+        const row = `<tr><td>${name}</td><td>${qty}</td></tr>`;
+        tbody.innerHTML += row;
+      });
+    }
+  </script>
+</body>
+</html>

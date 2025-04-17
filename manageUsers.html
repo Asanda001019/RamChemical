@@ -1,0 +1,12 @@
+<!-- manage-users.html -->
+<script>
+    const role = localStorage.getItem("userRole");
+    if (role !== "admin") {
+      alert("Access denied. Admins only.");
+      window.location.href = "index.html";
+    }
+  </script>
+  
+  <h2>Manage Users</h2>
+  <p>Offline demo: You can simulate adding cashier credentials or link this with your login system.</p>
+  

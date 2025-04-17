@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -147,6 +148,26 @@
             font-weight: bold;
             color: #7dcea0;
         }
+        
+    .logout-btn:hover {
+      background-color: #218838;
+    }
+
+    .login-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    .login-btn:hover {
+      background-color: #218838;
+    }
     </style>
 </head>
 <body>
@@ -157,41 +178,40 @@
   <p>Only visible to admin/manager users.</p>
 </div> -->
 
-   <!-- Sidebar -->
-<div class="sidebar">
-    <div class="sidebar-logo">
-      <div class="logo-text">
-        <img src="Selected photo.jfif" alt="Logo" style="width: 150px; height: 150px;  ">
-      </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-text">Ramchem logo</div>
+            <!-- <div><i class="fas fa-leaf fa-2x" style="color: #7dcea0; margin-top: 10px;"></i></div> -->
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active">
+                <i class="fas fa-tachometer-alt" style="padding: 10px;"></i>
+                <span>RamChemicals</span>
+            </div>
+            <a href="viewOrder.html" class="menu-item">
+                <i class="fas fa-shopping-cart" style="padding: 10px;"></i>
+                <span>View Orders</span>
+            </div>
+            <a href="processOrder.html" class="menu-item">
+                <i class="fas fa-tasks" style="padding: 10px;"></i>
+                <span>Process Order</span>
+            </div>
+            
+            <a href="addProduct.html" class="menu-item">
+                <i class="fas fa-plus-circle" style="padding: 10px;"></i>
+                <span>Add Products</span>
+            </a>
+            <a href="viewProduct.html" class="menu-item">
+                <i class="fas fa-boxes" style="padding: 10px;"></i>
+                <span>View Products</span>
+            </a>
+            <div class="menu-item">
+                <i class="fas fa-cog" style="padding: 10px;"></i>
+                <span>Settings</span>
+            </div>
+        </div>
     </div>
-    <div class="sidebar-menu">
-      <a href="index.html" class="menu-item active">
-        <i class="fas fa-tachometer-alt" style="padding: 10px;"></i>
-        <span>RamChemicals</span>
-      </a>
-      <a href="viewOrder.html" class="menu-item">
-        <i class="fas fa-shopping-cart" style="padding: 10px;"></i>
-        <span>View Orders</span>
-      </a>
-      <a href="processOrder.html" class="menu-item">
-        <i class="fas fa-tasks" style="padding: 10px;"></i>
-        <span>Place Orders</span>
-      </a>
-      <a href="addProduct.html" class="menu-item">
-        <i class="fas fa-plus-circle" style="padding: 10px;"></i>
-        <span>Add Products</span>
-      </a>
-      <a href="viewProduct.html" class="menu-item">
-        <i class="fas fa-boxes" style="padding: 10px;"></i>
-        <span>View Products</span>
-      </a>
-      <a href="#" class="menu-item">
-        <i class="fas fa-cog" style="padding: 10px;"></i>
-        <span>Settings</span>
-      </a>
-    </div>
-  </div>
-  
 
     <!-- Main Content -->
     <div class="main-content">
@@ -248,19 +268,19 @@
           // Not logged in, redirect to login
           window.location.href = "login.html";
         }
-      
-        window.onload = function () {
-          const greeting = document.getElementById("greeting");
-          const panel = document.getElementById("adminPanel");
-      
-          if (role === "admin") {
-            greeting.textContent = "Welcome, Manager!";
-            panel.style.display = "block";
-          } else if (role === "cashier") {
-            greeting.textContent = "Welcome, Cashier!";
-            panel.style.display = "none"; // hide admin-only panels
-          }
-        };
+
+        
+        function logout() {
+  const confirmation = confirm("Are you sure you want to log out?");
+  if (confirmation) {
+    // Clear session data
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("loggedInUser");
+
+    // Redirect to login page
+    window.location.href = "login.html";
+  }
+}
       </script>
       
 </body>

@@ -54,6 +54,17 @@
     
   </style>
 </head>
+<script>
+    // If already logged in, redirect based on role
+    const userRole = localStorage.getItem("userRole");
+  
+    if (userRole === "admin") {
+      window.location.href = "index.html"; // or admin dashboard
+    } else if (userRole === "cashier") {
+      window.location.href = "cashier.html";
+    }
+  </script>
+  
 <body>
 
   <div class="login-container">
@@ -70,43 +81,42 @@
     <button onclick="login()">Login</button>
   </div>
 
-  <script>
-    // Dummy user database
-    const users = {
-  admin: {
-    username: "manager",
-    password: "admin123",
-    role: "admin"
-  },
-  cashier: {
-    username: "cashier",
-    password: "cash123",
-    role: "cashier"
+  
+
+<script>
+  function login() {
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    // Example users (you can customize this)
+    const users = [
+      { username: "admin", password: "admin123", role: "admin" },
+      { username: "cashier", password: "cashier123", role: "cashier" }
+    ];
+
+    const user = users.find(u => u.username === username && u.password === password);
+
+    if (user) {
+      localStorage.setItem("userRole", user.role);
+      localStorage.setItem("loggedInUser", user.username);
+
+      // Redirect based on role
+      if (user.role === "admin") {
+        window.location.href = "index.html"; // or admin dashboard
+      } else if (user.role === "cashier") {
+        window.location.href = "cashier.html";
+      }
+    } 
+    
+    else {
+      alert("Invalid credentials. Please try again.");
+    }
+
+
   }
-};
+</script>
 
-function login() {
-  const role = document.getElementById("role").value;
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const errorDiv = document.getElementById("error");
 
-  const user = users[role];
-
-  if (username === user.username && password === user.password) {
-    errorDiv.innerText = "";
-
-    // Store user role (for use in index.html)
-    localStorage.setItem("userRole", user.role);
-
-    // Redirect to dashboard (index.html)
-    window.location.href = "index.html";
-  } else {
-    errorDiv.innerText = "Invalid credentials. Please try again.";
-  }
-}
-
-  </script>
 
 </body>
 </html>
