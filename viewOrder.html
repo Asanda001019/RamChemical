@@ -88,5 +88,18 @@
       Total: $17.47
     </div>
   </div>
+  <!-- view-order.html -->
+<script>
+  const role = localStorage.getItem("userRole");
+  if (role !== "admin") {
+    alert("Access denied. Admins only.");
+    window.location.href = "viewOrder.html";
+  }
+
+  const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+  console.log("Orders:", orders);
+</script>
+<h2>Orders will be listed here (connect to localStorage['orders'])</h2>
+
 </body>
 </html>
