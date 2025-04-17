@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cashier Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f4f4f4;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .total {
+      text-align: right;
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    .btns {
+      margin-top: 30px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btns button {
+      flex: 1;
+      padding: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .btn-checkout { background-color: #28a745; color: white; }
+    .btn-new { background-color: #007bff; color: white; }
+    .btn-history { background-color: #17a2b8; color: white; }
+    .btn-logout { background-color: #dc3545; color: white; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🧾 Cashier Dashboard</h1>
+
+    <input type="text" id="barcode" placeholder="Enter or scan barcode..." onkeydown="handleBarcode(event)" autofocus>
+
+    <table id="cartTable">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Qty</th>
+          <th>Price</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="total" id="totalDisplay">Total: $0.00</div>
+
+    <div class="btns">
+      <button class="btn-checkout" onclick="checkout()">✅ Checkout</button>
+      <button class="btn-new" onclick="startNewTransaction()">🔁 New Transaction</button>
+      <button class="btn-history" onclick="viewHistory()">📜 Transaction History</button>
+      <button class="btn-logout" onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <script>
+    const role = localStorage.getItem("userRole");
+    if (role !== "cashier") {
+      alert("Access denied. Cashiers only.");
+      window.location.href = "index.html";
+    }
+
+    const productDB = {
+      "1111": { name: "Coca Cola", price: 1.5 },
+      "2222": { name: "Pepsi", price: 1.4 },
+      "3333": { name: "Water", price: 1.0 },
+      "4444": { name: "Chips", price: 1.8 }
+    };
+
+    let cart = [];
+
+    function handleBarcode(e) {
+      if (e.key === "Enter") {
+        const code = e.target.value.trim();
+        e.target.value = "";
+        if (productDB[code]) {
+          addToCart(code);
+        } else {
+          alert("Product not found.");
+        }
+      }
+    }
+
+    function addToCart(code) {
+      const existing = cart.find(item => item.code === code);
+      if (existing) {
+        existing.qty++;
+      } else {
+        const product = productDB[code];
+        cart.push({ code, name: product.name, price: product.price, qty: 1 });
+      }
+      renderCart();
+    }
+
+    function renderCart() {
+      const tbody = document.querySelector("#cartTable tbody");
+      tbody.innerHTML = "";
+      let total = 0;
+
+      cart.forEach(item => {
+        const subtotal = item.qty * item.price;
+        total += subtotal;
+
+        tbody.innerHTML += `
+          <tr>
+            <td>${item.name}</td>
+            <td>${item.qty}</td>
+            <td>$${item.price.toFixed(2)}</td>
+            <td>$${subtotal.toFixed(2)}</td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("totalDisplay").textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert("Cart is empty.");
+        return;
+      }
+
+      const total = cart.reduce((sum, item) => sum + item.qty * item.price, 0);
+      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+
+      orders.push({
+        items: cart,
+        total: total,
+        timestamp: new Date().toISOString()
+      });
+
+      localStorage.setItem("orders", JSON.stringify(orders));
+
+      alert("✅ Transaction completed!");
+      startNewTransaction();
+    }
+
+    function startNewTransaction() {
+      cart = [];
+      renderCart();
+      document.getElementById("barcode").focus();
+    }
+
+    function logout() {
+      localStorage.removeItem("userRole");
+      window.location.href = "login.html";
+    }
+
+    function viewHistory() {
+      const orders = JSON.parse(localStorage.getItem("orders") || "[]");
+      if (orders.length === 0) {
+        alert("No transactions yet.");
+        return;
+      }
+
+      let message = "📜 Transaction History:\n\n";
+      orders.forEach((order, i) => {
+        message += `#${i + 1} - $${order.total.toFixed(2)} - ${new Date(order.timestamp).toLocaleString()}\n`;
+      });
+
+      alert(message);
+    }
+
+    // Init cart
+    renderCart();
+  </script>
+</body>
+</html>
