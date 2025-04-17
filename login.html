@@ -73,39 +73,34 @@
   <script>
     // Dummy user database
     const users = {
-  admin: {
-    username: "manager",
-    password: "admin123",
-    role: "admin"
-  },
-  cashier: {
-    username: "cashier",
-    password: "cash123",
-    role: "cashier"
-  }
-};
+      admin: {
+        username: "manager",
+        password: "admin123", // In real apps, use hashed passwords
+        redirect: "index.html"
+      },
+      cashier: {
+        username: "cashier",
+        password: "cash123",
+        redirect: "cashier.html"
+      }
+    };
 
-function login() {
-  const role = document.getElementById("role").value;
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const errorDiv = document.getElementById("error");
+    function login() {
+      const role = document.getElementById("role").value;
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorDiv = document.getElementById("error");
 
-  const user = users[role];
+      const user = users[role];
 
-  if (username === user.username && password === user.password) {
-    errorDiv.innerText = "";
-
-    // Store user role (for use in index.html)
-    localStorage.setItem("userRole", user.role);
-
-    // Redirect to dashboard (index.html)
-    window.location.href = "index.html";
-  } else {
-    errorDiv.innerText = "Invalid credentials. Please try again.";
-  }
-}
-
+      if (username === user.username && password === user.password) {
+        errorDiv.innerText = "";
+        // Redirect to the correct page
+        window.location.href = user.redirect;
+      } else {
+        errorDiv.innerText = "Invalid credentials. Please try again.";
+      }
+    }
   </script>
 
 </body>
