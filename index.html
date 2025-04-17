@@ -146,6 +146,26 @@
             font-weight: bold;
             color: #7dcea0;
         }
+        
+    .logout-btn:hover {
+      background-color: #218838;
+    }
+
+    .login-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      text-align: center;
+    }
+
+    .login-btn:hover {
+      background-color: #218838;
+    }
     </style>
 </head>
 <body>
@@ -258,7 +278,19 @@
           // Not logged in, redirect to login
           window.location.href = "login.html";
         }
-      
+
+        
+        function logout() {
+  const confirmation = confirm("Are you sure you want to log out?");
+  if (confirmation) {
+    // Clear session data
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("loggedInUser");
+
+    // Redirect to login page
+    window.location.href = "login.html";
+  }
+}
       </script>
       
 </body>
